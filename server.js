@@ -1,16 +1,20 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var mongo = require('mongodb').MongoClient;
 
 app.use(bodyParser.json());
+app.use(function(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
 
-//create an endpoint for message post
 app.post('/api/message', function(req,res){
     console.log(req.body);
     res.status(200);
-});
+})
 
-//set up a server
 var server = app.listen(5000, function(){
-   console.log('Listening on port', server.address().port);
-});
+    console.log("Listening on port", server.address().port);
+})
