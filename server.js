@@ -14,6 +14,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+//get
+app.get('/api/message', GetMessages);
+
 //creat a post method
 app.post('/api/message', function (req, res) {
     console.log(req.body);
@@ -22,11 +25,16 @@ app.post('/api/message', function (req, res) {
     res.status(200);
 })
 
+//post method for authentication
+app.post('/auth/register', function(req,res){
+    console.log(req.body)
+});
+
 //function to retrieve all the post/messages
-function GetMessages(){
+function GetMessages(req, res){
     //passing empty param
     Message.find({}).exec(function(err,result){
-        console.log(result);
+        res.send(result);
     });
 }
 
@@ -34,7 +42,6 @@ function GetMessages(){
 mongoose.connect('mongodb://localhost:27017/mypost', function (err, db) {
     if (!err) {
         console.log("connected to mongodb");
-        GetMessages();
     }
 })
 
