@@ -4,19 +4,19 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var auth = require('./controllers/auth');
 var message = require('./controllers/message');
+var checkIfAuthenticated = require('./services/checkIfAuthenticated');
+var cors = require('./services/cors');
 
+//MIDDLEWARE
 app.use(bodyParser.json());
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
+app.use(cors.cors);
 
+//REQUESTS
 //get
 app.get('/api/message', message.get);
 
 //creat a post method
-app.post('/api/message', message.post);
+app.post('/api/message', checkIfAuthenticated.check, message.post);
 
 //post method for authentication
 app.post('/auth/register', auth.register);
