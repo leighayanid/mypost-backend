@@ -3,9 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var Message = mongoose.model('Message', {
-    msg: String
-}); //uppercase meaning this is something needs to instantiate
+var Message = require('./models/message');
+var User = require('./models/user');
 
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
